@@ -7,7 +7,7 @@ var C={archivo:'prueba',edicion_url:'',faq:{titulo:nodo.querySelector('.pxf-tit'
  esquema:{nombre:'Preguntas frecuentes',campos:[{k:'titulo',t:'Título',tipo:'texto',ideal:60,max:100},{k:'items',t:'Preguntas',singular:'Pregunta',tipo:'lista',max:12,min:1,nuevo:'Agregar pregunta',item:[{k:'p',t:'Pregunta',tipo:'texto',ideal:90,max:150},{k:'r',t:'Respuesta',tipo:'area',ideal:500,max:1200}]}]},
  variantes:{pc:[{v:'lista',n:'Lista'},{v:'columnas',n:'Dos columnas',css:'& .pxf-lista{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}'}],cel:[{v:'lista',n:'Lista'},{v:'tarjetas',n:'Tarjetas',css:'& .pxf-it{margin-bottom:10px;padding:0 14px;border:1px solid #333;border-radius:10px}'}]}}}}};
 PX.rehacer=function(id){if(id!=='faq')return;var F=C.faq;nodo.querySelector('.pxf-tit').textContent=F.titulo||'';var L=nodo.querySelector('.pxf-lista');var m=L.querySelector('.pxf-it').cloneNode(true);L.textContent='';(F.items||[]).forEach(function(it){var d=m.cloneNode(true);d.querySelector('.pxf-qt').textContent=it.p||'';var a=d.querySelector('.pxf-a');a.textContent='';var p=document.createElement('p');p.textContent=it.r||'';a.appendChild(p);L.appendChild(d)})};
-PX.panelGuardar=function(b,c){window.__pxpGuardados.push({bloque:b,campos:c});return Promise.resolve()};
+PX.panelGuardar=function(b,c){(window.parent.__pxpG=window.parent.__pxpG||[]).push({bloque:b,campos:c});return Promise.resolve()};
 window.__pxpC=C;
 /* ═════════════════════════════════════════════════════════════
    DATOS POR EXCEL · bajar → cambiar → subir (02-11-2026)
