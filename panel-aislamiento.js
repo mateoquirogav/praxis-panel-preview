@@ -36,6 +36,7 @@
     var id = ids[i];
     PX.panelAbrir(id);
     await espera(100);
+    if (document.querySelector('#pxp input[type=password]')) { throw new Error('falta la clave de la tienda'); }
     var campos = Array.prototype.filter.call(document.querySelectorAll('#pxp input.form-control[type=text],#pxp textarea.form-control'), function (c) {
       return !/^https?:|^\//.test(c.value) && c.value.trim();
     });
@@ -58,5 +59,7 @@
     if (cab) { cab.click(); }
   }
   R.bloques = ids;
+  /* sin campos cambiados no se probó nada: eso nunca es un OK */
+  if (!R.cambiados) { R.ok = false; R.fallas.push('no se cambió ningún campo: la prueba no probó nada'); }
   window.__pxpAisla = R;
 })().catch(function (e) { window.__pxpAisla = { ok: false, error: e.message }; });
