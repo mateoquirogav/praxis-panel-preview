@@ -257,9 +257,14 @@ window.__pxpC=C;
   var LISTA = '.sortable-sections';
   if (PW.__pxPanelFin) { PW.__pxPanelFin(); }  /* la vista previa se recargó */
 
+  /* Cambiar Celulares/Computadoras o guardar recarga la vista previa: lo que
+     todavía no se guardó vive en la ventana del editor y vuelve al recargar. */
+  var B = PW.__pxpBorrador = PW.__pxpBorrador || { vars: null, datos: {}, sucios: {}, abierto: null };
+  if (B.vars) { VARS = JSON.parse(B.vars); }
+  Object.keys(B.datos).forEach(function (id) { C[id] = JSON.parse(B.datos[id]); });
+
   var lista = function () { return P.querySelector(LISTA); };
-  var sucios = {};
-  var hayCambios = false;
+  var hayCambios = Object.keys(B.sucios).length > 0 || !!B.vars;
   var avisarTN = function () {
     /* TN habilita «Guardar» con su propio aviso de cambio */
     var L = lista(), k = L && Object.keys(L).filter(function (x) { return /^Sortable/.test(x); })[0];
@@ -354,7 +359,12 @@ window.__pxpC=C;
     if (txt != null) { n.textContent = txt; }
     return n;
   };
-  var cambio = function (id) { sucios[id] = true; hayCambios = true; avisarTN(); };
+  var cambio = function (id) {
+    B.sucios[id] = true;
+    B.datos[id] = JSON.stringify(C[id]);
+    hayCambios = true;
+    avisarTN();
+  };
   var campoTexto = function (c, obj, id) {
     var w = el('div', 'pxp-c'), lab = el('label', 'l', c.t);
     var v = obj[c.k] == null ? '' : String(obj[c.k]);
@@ -428,6 +438,7 @@ window.__pxpC=C;
         b.addEventListener('click', function () {
           VARS[id] = VARS[id] || {};
           VARS[id][d[0]] = o.v;
+          B.vars = JSON.stringify(VARS);
           marcar(); pintarVar(id); hayCambios = true; avisarTN();
         });
         g.appendChild(b);
@@ -473,6 +484,7 @@ window.__pxpC=C;
   };
   var abrir = function (id) {
     if (!id) { return; }
+    B.abierto = id;
     cerrar();
     var col = lista().closest('.sidebar') || P.body;
     if (getComputedStyle(col).position === 'static') { col.style.position = 'relative'; }
@@ -480,7 +492,7 @@ window.__pxpC=C;
     var cab = el('div'); cab.id = 'pxp-cab';
     var atras = el('button', '', '‹');
     atras.type = 'button'; atras.setAttribute('aria-label', 'Volver');
-    atras.addEventListener('click', cerrar);
+    atras.addEventListener('click', function () { B.abierto = null; cerrar(); });
     cab.appendChild(atras);
     cab.appendChild(el('span', '', K.bloques[id].nombre));
     var cuerpo = el('div'); cuerpo.id = 'pxp-cuerpo';
@@ -514,12 +526,12 @@ window.__pxpC=C;
     return fetch(C.edicion_url + '/e/' + C.archivo, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ bloque: bloque, campos: campos }) });
   };
   var alGuardar = function () {
-    Object.keys(sucios).forEach(function (id) {
+    Object.keys(B.sucios).forEach(function (id) {
       var campos = {};
       (esquemaDe(id).campos || []).forEach(function (c) { if (C[id] && c.k in C[id]) { campos[c.k] = C[id][c.k]; } });
       enviar(id, campos);
     });
-    sucios = {};
+    B.sucios = {}; B.datos = {}; B.vars = null;
     K.datos_json = JSON.stringify({ orden: leerOrden(), vars: VARS });
     enviar('panel-praxis', { datos_json: K.datos_json });
     hayCambios = false;
@@ -552,9 +564,11 @@ window.__pxpC=C;
     obs = new MutationObserver(nombrar);
     obs.observe(lista(), { childList: true, subtree: true, characterData: true });
     lista().addEventListener('click', alCliquear, true);
+    Object.keys(B.datos).forEach(redibujar);
     IDS.forEach(pintarVar);
     ubicar(leerOrden());
     if (hayCambios) { avisarTN(); }
+    if (B.abierto) { abrir(B.abierto); }
   };
   PW.__pxPanelFin = function () {
     if (obs) { obs.disconnect(); }
