@@ -2,7 +2,7 @@
 (function(){
 var PX=window.PX;PX.enEditor=true;window.__pxpGuardados=[];
 var nodo=document.querySelector('[data-px="faq"]');
-var C={archivo:'prueba',edicion_url:'',faq:{titulo:nodo.querySelector('.pxf-tit').textContent,items:[].map.call(nodo.querySelectorAll('.pxf-it'),function(d){return{p:d.querySelector('.pxf-qt').textContent,r:d.querySelector('.pxf-a').innerText.trim()}})},
+var C={archivo:'prueba',edicion_url:'',faq:{titulo:nodo.querySelector('.pxf-tit').textContent,items:[].map.call(nodo.querySelectorAll('.pxf-it'),function(d){return{p:d.querySelector('.pxf-qt').textContent,r:d.querySelector('.pxf-a').textContent.trim()}})},
 'panel-praxis':{bloques:{faq:{nombre:'Preguntas frecuentes',excel:true,
  esquema:{nombre:'Preguntas frecuentes',campos:[{k:'titulo',t:'Título',tipo:'texto',ideal:60,max:100},{k:'items',t:'Preguntas',singular:'Pregunta',tipo:'lista',max:12,min:1,nuevo:'Agregar pregunta',item:[{k:'p',t:'Pregunta',tipo:'texto',ideal:90,max:150},{k:'r',t:'Respuesta',tipo:'area',ideal:500,max:1200}]}]},
  variantes:{pc:[{v:'lista',n:'Lista'},{v:'columnas',n:'Dos columnas',css:'& .pxf-lista{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}'}],cel:[{v:'lista',n:'Lista'},{v:'tarjetas',n:'Tarjetas',css:'& .pxf-it{margin-bottom:10px;padding:0 14px;border:1px solid #333;border-radius:10px}'}]}}}}};
@@ -285,7 +285,7 @@ window.__pxpC=C;
     '#pxp-cab{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border-bottom:1px solid #eee}' +
     '#pxp-cab button{width:32px;height:32px;border:0;background:none;cursor:pointer;font-size:18px;color:#333}' +
     '#pxp-cuerpo{flex:1;min-height:0;overflow-y:auto;padding:14px 16px 24px}' +
-    '#pxp .pxp-c{margin-bottom:14px}#pxp label.l{display:flex;justify-content:space-between;gap:8px;margin-bottom:4px}' +
+    '#pxp .pxp-c{margin-bottom:14px}#pxp label.l{display:flex;justify-content:space-between;gap:8px;margin-bottom:4px;font-size:12px;font-weight:400;color:#5d5d5d}' +
     '#pxp .pxp-n{color:#8a8a8a;font-variant-numeric:tabular-nums}#pxp .pxp-n.pasa{color:#b45309}' +
     '#pxp textarea.form-control{height:auto;min-height:84px;resize:vertical}' +
     '#pxp h4{margin:18px 0 8px;font-size:13px;font-weight:600}' +
@@ -294,7 +294,7 @@ window.__pxpC=C;
     '#pxp .pxp-gt span{margin-right:auto}' +
     '#pxp .pxp-b{min-height:30px;min-width:30px;padding:0 10px;border:1px solid #ccc;border-radius:8px;background:#fff;color:#333;cursor:pointer;font-size:13px}' +
     '#pxp .pxp-b:disabled{opacity:.35;cursor:not-allowed}' +
-    '#pxp .pxp-var{display:flex;flex-wrap:wrap;gap:6px}' +
+    '#pxp .pxp-var{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}' +
     '#pxp .pxp-var button[aria-pressed=true]{border-color:#006bc8;background:#e8f2fb;color:#004f94}' +
     '#pxp .pxp-acc{display:flex;flex-wrap:wrap;gap:8px}' +
     '#pxp .pxp-msg{margin:8px 0 0;font-size:12px;white-space:pre-line;color:#5d5d5d}#pxp .pxp-msg.mal{color:#b91c1c}' +
