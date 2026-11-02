@@ -21,7 +21,7 @@ svg{display:block}
 .app{height:100dvh;display:grid;grid-template-rows:auto 56px minmax(0,1fr);grid-template-columns:340px minmax(0,1fr);grid-template-areas:"aviso aviso" "barra barra" "panel vista"}
 
 /* aviso de demo */
-.aviso{grid-area:aviso;display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 16px;background:#0f1d33;color:#fff;font-size:12.5px;text-align:center}
+.aviso{grid-area:aviso;padding:7px 16px;background:#0f1d33;color:#fff;font-size:12.5px;text-align:center}
 .aviso b{font-weight:600}
 
 /* barra superior: igual a Editar diseño */
@@ -97,7 +97,7 @@ textarea{min-height:84px;resize:vertical}
 .variante:hover{border-color:#9ca3af}
 .variante span{display:block;padding:5px 3px 2px;font-size:12px;font-weight:500}
 .mini-vista{position:relative;height:86px;overflow:hidden;border-radius:5px;background:var(--t-bg);pointer-events:none}
-.mini-vista>div{position:absolute;left:0;top:0;width:1000px;transform-origin:0 0}
+.mini-vista>div{position:absolute;left:0;top:50%;width:700px;transform-origin:0 0}
 .acciones-bloque{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:14px;border-top:1px solid var(--linea)}
 .link-peligro{min-height:36px;padding:7px 11px;border:1px solid #fecaca;border-radius:6px;color:#b91c1c;font-size:13px;font-weight:500}
 .catalogo{padding:12px 16px 24px}
@@ -312,7 +312,7 @@ textarea{min-height:84px;resize:vertical}
   /* ─── esquemas: lo mismo que hoy define cada lápiz, ahora en el panel ─── */
   var TIPOS = {
     banner: { nombre: 'Carrusel de imágenes', tn: true, campos: [
-      { k: 'titulo', t: 'text', l: 'Título', ideal: 34, max: 70 },
+      { k: 'titulo', t: 'text', l: 'Título', ideal: 45, max: 70 },
       { k: 'texto', t: 'text', l: 'Descripción', ideal: 70, max: 120 },
       { k: 'boton', t: 'text', l: 'Botón', ideal: 18, max: 28 }
     ], base: { titulo: 'Hecho a mano, para usar todos los días', texto: 'Cerámica de taller en tandas chicas.', boton: 'Ver colección' } },
@@ -536,8 +536,8 @@ textarea{min-height:84px;resize:vertical}
     panel.scrollTop = 0;
   };
   var miniVista = function (tipo, v, datos, ancho) {
-    var alto = 86, esc1 = ancho / 1000;
-    return '<div class="mini-vista" style="height:' + alto + 'px"><div style="transform:scale(' + esc1 + ')"><div class="tienda">' + DIBUJA[tipo](datos || TIPOS[tipo].base, v) + '</div></div></div>';
+    var alto = 86, esc1 = ancho / 700;
+    return '<div class="mini-vista" style="height:' + alto + 'px"><div style="transform:scale(' + esc1 + ') translateY(-50%)"><div class="tienda">' + DIBUJA[tipo](datos || TIPOS[tipo].base, v) + '</div></div></div>';
   };
   var pCatalogo = function () {
     var h = cabeza('Agregar bloque', 'Elegí un diseño y aparece en tu página', 'inicio') + '<div class="catalogo">';
